@@ -18,5 +18,6 @@ public interface IDataBaseContextRepository
     Task<UpdateResult> UpdateDocumentByFilterAsync<T>(string collectionName, UpdateDefinition<T> definition, FilterDefinition<T> filter);
 
     Task<bool> ExistsDocumentAsync<T>(string collectionName, FilterDefinition<T> filter);
+
     Task<bool> ExistsDocumentByIdAsync<T>(string collectionName, string id);
 }

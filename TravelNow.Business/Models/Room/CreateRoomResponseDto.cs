@@ -5,5 +5,5 @@ public class CreateRoomResponseDto : ResponseBaseDto
     /// <summary>
     /// Id generado de la habitación
     /// </summary>
-    public Guid Id { get; set; }
+    public string Id { get; set; }
 }

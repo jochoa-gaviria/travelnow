@@ -6,7 +6,7 @@ public class DisableRoomRequestDto
     /// <summary>
     /// Id de habitación
     /// </summary>
-    public Guid Id { get; set; }
+    public string Id { get; set; }
     
     /// <summary>
     /// Determina si esta habilitado o deshabilitado

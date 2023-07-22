@@ -28,6 +28,9 @@ namespace TravelNow.Application.Services
         /// </summary>
         private readonly ICollectionNameHelper _collectionNameHelper;
 
+        /// <summary>
+        /// Nombre de la colección de base de datos
+        /// </summary>
         private readonly string _collectionName;
         #endregion internals
 
@@ -57,7 +60,7 @@ namespace TravelNow.Application.Services
                 var alreadyExists = await _dataBaseContextRepository.ExistsDocumentAsync(_collectionName, filter);
                 if (alreadyExists)
                 {
-                    serviceResponse.SetProperties(HttpStatusCode.BadRequest, "El hotel ya existe.");
+                    serviceResponse.SetProperties(HttpStatusCode.BadRequest, $"El hotel {createHotelRequestDto.Name} ya existe.");
                     return serviceResponse;
                 }
                 
@@ -94,24 +97,11 @@ namespace TravelNow.Application.Services
                 var alreadyExists = await _dataBaseContextRepository.ExistsDocumentByIdAsync<Hotel>(_collectionName, updateHotelRequestDto?.Id);
                 if (!alreadyExists)
                 {
-                    serviceResponse.SetProperties(HttpStatusCode.BadRequest, "El hotel no existe.");
+                    serviceResponse.SetProperties(HttpStatusCode.BadRequest, $"El hotel con id {updateHotelRequestDto.Id} no existe.");
                     return serviceResponse;
                 }
 
-                List<UpdateDefinition<Hotel>> updateDefinitions = new();
-
-                if (!string.IsNullOrEmpty(updateHotelRequestDto.Name))
-                    updateDefinitions.Add(Builders<Hotel>.Update.Set(hotel => hotel.Name, updateHotelRequestDto.Name));
-
-                if (!string.IsNullOrEmpty(updateHotelRequestDto.Country))
-                    updateDefinitions.Add(Builders<Hotel>.Update.Set(hotel => hotel.Country, updateHotelRequestDto.Country));
-                
-                if (!string.IsNullOrEmpty(updateHotelRequestDto.City))
-                    updateDefinitions.Add(Builders<Hotel>.Update.Set(hotel => hotel.City, updateHotelRequestDto.City));
-
-                UpdateDefinition<Hotel> updateDefinition = Builders<Hotel>.Update.Combine(updateDefinitions);
-
-                var result = await _dataBaseContextRepository.UpdateDocumentByIdAsync(_collectionName, updateHotelRequestDto.Id, updateDefinition);
+                var result = await _dataBaseContextRepository.UpdateDocumentByIdAsync(_collectionName, updateHotelRequestDto.Id, BuildUpdateDefinitions(updateHotelRequestDto));
 
                 serviceResponse.Response = new ResponseBaseDto()
                 {
@@ -140,7 +130,7 @@ namespace TravelNow.Application.Services
                 var alreadyExists = await _dataBaseContextRepository.ExistsDocumentByIdAsync<Hotel>(_collectionName, disableHotelRequestDto?.Id);
                 if (!alreadyExists)
                 {
-                    serviceResponse.SetProperties(HttpStatusCode.BadRequest, "El hotel no existe.");
+                    serviceResponse.SetProperties(HttpStatusCode.BadRequest, $"El hotel con id {disableHotelRequestDto.Id} no existe.");
                     return serviceResponse;
                 }
 
@@ -163,5 +153,27 @@ namespace TravelNow.Application.Services
             return serviceResponse;
         }
         #endregion public methods
+
+
+        #region private methods
+        private UpdateDefinition<Hotel> BuildUpdateDefinitions(UpdateHotelRequestDto updateHotelRequestDto)
+        {
+
+            List<UpdateDefinition<Hotel>> updateDefinitions = new();
+
+            if (!string.IsNullOrEmpty(updateHotelRequestDto.Name))
+                updateDefinitions.Add(Builders<Hotel>.Update.Set(hotel => hotel.Name, updateHotelRequestDto.Name));
+
+            if (!string.IsNullOrEmpty(updateHotelRequestDto.Country))
+                updateDefinitions.Add(Builders<Hotel>.Update.Set(hotel => hotel.Country, updateHotelRequestDto.Country));
+
+            if (!string.IsNullOrEmpty(updateHotelRequestDto.City))
+                updateDefinitions.Add(Builders<Hotel>.Update.Set(hotel => hotel.City, updateHotelRequestDto.City));
+
+            UpdateDefinition<Hotel> updateDefinition = Builders<Hotel>.Update.Combine(updateDefinitions);
+            return updateDefinition;
+        }
+
+        #endregion private methods
     }
 }

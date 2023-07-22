@@ -1,9 +1,17 @@
-﻿using TravelNow.Common.Enums;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+using TravelNow.Common.Enums;
 
-namespace TravelNow.Business.Models.Room;
+namespace TravelNow.DataAccess.Contracts.Entities;
 
-public class RoomRequestBaseDto
+public class Room
 {
+    /// <summary>
+    /// Id de habitación
+    /// </summary>
+    [BsonId]
+    public ObjectId Id { get; set; }
+
     /// <summary>
     /// Numero de habitación
     /// </summary>
@@ -12,18 +20,18 @@ public class RoomRequestBaseDto
     /// <summary>
     /// Id de hotel
     /// </summary>
-    public string HotelId { get; set; }
-    
+    public ObjectId HotelId { get; set; }
+
     /// <summary>
     /// Costo base de habitación
     /// </summary>
     public float BaseCost { get; set; }
-    
+
     /// <summary>
     /// Impuestos
     /// </summary>
     public float Tax { get; set; }
-    
+
     /// <summary>
     /// Tipo de habitación
     /// 0 - Suite
@@ -33,4 +41,10 @@ public class RoomRequestBaseDto
     /// 4 - Doble
     /// </summary>
     public RoomTypes RoomType { get; set; }
+
+
+    /// <summary>
+    /// Define si esta disponible
+    /// </summary>
+    public bool IsEnabled { get; set; }
 }

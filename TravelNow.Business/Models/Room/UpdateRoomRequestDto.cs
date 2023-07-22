@@ -6,5 +6,5 @@ public class UpdateRoomRequestDto : RoomRequestBaseDto
     /// <summary>
     /// Id de habitación.
     /// </summary>
-    public Guid Id { get; set; }
+    public string? Id { get; set; }
 }
