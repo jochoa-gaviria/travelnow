@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TravelNow.Business\TravelNow.Business.csproj" />
     <ProjectReference Include="..\TravelNow.Common\TravelNow.Common.csproj" />
     <ProjectReference Include="..\TravelNow.CrossCuttring\TravelNow.CrossCuttring.csproj" />
   </ItemGroup>

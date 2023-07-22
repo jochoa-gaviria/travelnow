@@ -1,4 +1,7 @@
 ﻿using TravelNow.Application.Contracts.Interfaces;
+using TravelNow.Business.Models;
+using TravelNow.Business.Models.Hotel;
+using TravelNow.Business.Models.HotelRequest;
 using TravelNow.Common.Models;
 
 namespace TravelNow.Application.Services
@@ -18,8 +21,9 @@ namespace TravelNow.Application.Services
         /// <summary>
         /// Permite crear un hotel
         /// </summary>
+        /// <param name="createHotelRequestDto"></param>
         /// <returns></returns>
-        public Task<ResponseDto<bool>> CreateHotel()
+        public async Task<ResponseDto<CreateHotelResponseDto>> CreateHotel(CreateHotelRequestDto createHotelRequestDto)
         {
             throw new NotImplementedException();
         }
@@ -27,8 +31,9 @@ namespace TravelNow.Application.Services
         /// <summary>
         /// Permite actualizar un hotel
         /// </summary>
+        /// <param name="updateHotelRequestDto"></param>
         /// <returns></returns>
-        public Task<ResponseDto<bool>> DisableHotel()
+        public async Task<ResponseDto<ResponseBaseDto>> UpdateHotel(UpdateHotelRequestDto updateHotelRequestDto)
         {
             throw new NotImplementedException();
         }
@@ -36,8 +41,9 @@ namespace TravelNow.Application.Services
         /// <summary>
         /// Permite habilitar o deshabilitar un hotel
         /// </summary>
+        /// <param name="disableHotelRequestDto"></param>
         /// <returns></returns>
-        public Task<ResponseDto<bool>> UpdateHotel()
+        public async Task<ResponseDto<ResponseBaseDto>> DisableHotel(DisableHotelRequestDto disableHotelRequestDto)
         {
             throw new NotImplementedException();
         }

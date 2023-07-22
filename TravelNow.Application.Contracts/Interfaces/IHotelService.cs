@@ -1,4 +1,7 @@
-﻿using TravelNow.Common.Models;
+﻿using TravelNow.Business.Models;
+using TravelNow.Business.Models.Hotel;
+using TravelNow.Business.Models.HotelRequest;
+using TravelNow.Common.Models;
 
 namespace TravelNow.Application.Contracts.Interfaces;
 
@@ -7,18 +10,21 @@ public interface IHotelService
     /// <summary>
     /// Permite crear un hotel
     /// </summary>
+    /// <param name="createHotelRequestDto"></param>
     /// <returns></returns>
-    Task<ResponseDto<bool>> CreateHotel();
-    
+    Task<ResponseDto<CreateHotelResponseDto>> CreateHotel(CreateHotelRequestDto createHotelRequestDto);
+
     /// <summary>
     /// Permite actualizar un hotel
     /// </summary>
+    /// <param name="updateHotelRequestDto"></param>
     /// <returns></returns>
-    Task<ResponseDto<bool>> UpdateHotel();
-    
+    Task<ResponseDto<ResponseBaseDto>> UpdateHotel(UpdateHotelRequestDto updateHotelRequestDto);
+
     /// <summary>
     /// Permite habilitar o deshabilitar un hotel
     /// </summary>
+    /// <param name="disableHotelRequestDto"></param>
     /// <returns></returns>
-    Task<ResponseDto<bool>> DisableHotel();
+    Task<ResponseDto<ResponseBaseDto>> DisableHotel(DisableHotelRequestDto disableHotelRequestDto);
 }
