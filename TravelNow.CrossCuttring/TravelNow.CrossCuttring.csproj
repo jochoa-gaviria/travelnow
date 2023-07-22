@@ -13,6 +13,8 @@
   <ItemGroup>
     <ProjectReference Include="..\TravelNow.Application\TravelNow.Application.csproj" />
     <ProjectReference Include="..\TravelNow.Common\TravelNow.Common.csproj" />
+    <ProjectReference Include="..\TravelNow.DataAccess.Contracts\TravelNow.DataAccess.Contracts.csproj" />
+    <ProjectReference Include="..\TravelNow.DataAccess\TravelNow.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

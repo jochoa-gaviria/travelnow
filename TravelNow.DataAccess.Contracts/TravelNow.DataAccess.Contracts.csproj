@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TravelNow.Common\TravelNow.Common.csproj" />
+  </ItemGroup>
+
 </Project>

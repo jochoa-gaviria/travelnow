@@ -3,6 +3,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using TravelNow.Application.Contracts.Interfaces;
 using TravelNow.Application.Services;
+using TravelNow.Common.Helpers;
+using TravelNow.Common.Interfaces;
+using TravelNow.DataAccess.Context;
+using TravelNow.DataAccess.Contracts.Interfaces;
 
 namespace TravelNow.CrossCuttring.Register;
 
@@ -25,6 +29,8 @@ public static class DIResgister
 
     private static IServiceCollection AddRegisterRepositories(IServiceCollection services)
     {
+        services.AddTransient<IDataBaseContextRepository, DataBaseContextRepository>();
+        services.AddTransient<ICollectionNameHelper, CollectionNameHelper>();
         return services;
     }
 
