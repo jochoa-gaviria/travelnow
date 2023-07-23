@@ -4,5 +4,7 @@ public enum ECollectionName
 {
     book,
     hotel,
-    room
+    room,
+    passerger,
+    emergencyPasseger
 }

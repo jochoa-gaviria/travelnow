@@ -10,5 +10,7 @@ public class CollectionNameHelper : ICollectionNameHelper
         { ECollectionName.book, nameof(ECollectionName.book) },
         { ECollectionName.room, nameof(ECollectionName.room) },
         { ECollectionName.hotel, nameof(ECollectionName.hotel) },
+        { ECollectionName.passerger, nameof(ECollectionName.passerger) },
+        { ECollectionName.emergencyPasseger, nameof(ECollectionName.emergencyPasseger) }
     };
 }

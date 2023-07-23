@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TravelNow.Application.Contracts.Interfaces;
-using TravelNow.Application.Services;
 using TravelNow.Business.Models;
 using TravelNow.Business.Models.Room;
 using TravelNow.Common.Extensions;
