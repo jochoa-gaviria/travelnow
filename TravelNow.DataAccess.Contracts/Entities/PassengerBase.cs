@@ -6,8 +6,12 @@ namespace TravelNow.DataAccess.Contracts.Entities;
 
 public class PassengerBase
 {
+    /// <summary>
+    /// Id
+    /// </summary>
     [BsonId]
     public ObjectId Id { get; set; }
+    
     /// <summary>
     /// Nombre completo
     /// </summary>

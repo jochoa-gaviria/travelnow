@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Book\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TravelNow.Common\TravelNow.Common.csproj" />
   </ItemGroup>
 

@@ -25,7 +25,7 @@ namespace TravelNow.DataAccess.Contracts.Entities
         /// <summary>
         /// Id Cliente
         /// </summary>
-        public ObjectId ClientId { get; set; }
+        public ObjectId PassengerId { get; set; }
 
         /// <summary>
         /// Define si está disponible

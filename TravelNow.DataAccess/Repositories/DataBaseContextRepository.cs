@@ -42,6 +42,11 @@ public class DataBaseContextRepository : IDataBaseContextRepository
         return await _database.GetCollection<T>(collectionName).Find(_ => true).ToListAsync();
     }
 
+    public async Task<List<T>> GetAllDocumentsInCollectionByFilterAsync<T>(string collectionName, FilterDefinition<T> filer)
+    {
+        return await _database.GetCollection<T>(collectionName).Find(filer).ToListAsync();
+    }
+
     public async Task<T> InsertDocumentAsync<T>(string collectionName, T document)
     {
         await _database.GetCollection<T>(collectionName).InsertOneAsync(document);

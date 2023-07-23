@@ -3,6 +3,7 @@ using MongoDB.Driver;
 using System.Net;
 using TravelNow.Application.Contracts.Interfaces;
 using TravelNow.Business.Models;
+using TravelNow.Business.Models.Book;
 using TravelNow.Business.Models.Room;
 using TravelNow.Common.Enums;
 using TravelNow.Common.Helpers;
@@ -37,6 +38,11 @@ public class RoomService : IRoomService
     /// </summary>
     private readonly string _hotelCollectionName;
 
+    /// <summary>
+    /// Nombre de colección de reservas
+    /// </summary>
+    private readonly string _bookCollectionName;
+
     #endregion internals
 
     #region constructor
@@ -46,6 +52,7 @@ public class RoomService : IRoomService
         _collectionNameHelper = collectionNameHelper;
         _roomCollectionName = _collectionNameHelper.CollectionNames[ECollectionName.room];
         _hotelCollectionName = _collectionNameHelper.CollectionNames[ECollectionName.hotel];
+        _bookCollectionName = _collectionNameHelper.CollectionNames[ECollectionName.book];
     }
     #endregion constructor
 
@@ -188,7 +195,24 @@ public class RoomService : IRoomService
                 return serviceResponse;
             }
 
-            //TODO: Excluir de la lista de habitaciones aquella que ya tienen reserva en la fecha del Request
+            //Excluir de la lista de habitaciones aquella que ya tienen reserva en la fecha del Request
+            FilterDefinition<Book> startDateFilter = Builders<Book>.Filter.Lte(b => b.StartDate, findRoomRequestDto.StartDate);
+            FilterDefinition<Book> endDateFilter = Builders<Book>.Filter.Gte(b => b.EndDate, findRoomRequestDto.EndDate);
+            var filter = startDateFilter & endDateFilter;
+
+            var booksOnDate = await _dataBaseContextRepository.GetAllDocumentsInCollectionByFilterAsync(_bookCollectionName, filter);
+            if (booksOnDate != null && booksOnDate.Any())
+            {
+                var roomsNotEnabled = booksOnDate.Select(b => b.RoomId.ToString()).ToList();
+
+                roomsByHotelId = roomsByHotelId.Where(r => !roomsNotEnabled.Contains(r.Id.ToString())).ToList();
+                if (!roomsByHotelId.Any() || roomsByHotelId.Count < 1)
+                {
+                    serviceResponse.SetProperties(HttpStatusCode.BadRequest, $"No hay habitaciones disponibles en las fechas seleccionadas");
+                    return serviceResponse;
+                }
+            }
+
             serviceResponse.Response = new FindRoomResponseDto
             {
                 Rooms = roomsByHotelId.Select(r => r.TMapper<FindRoom>()).ToList()

@@ -7,6 +7,8 @@ public interface IDataBaseContextRepository
 {
     Task<List<T>> GetAllDocumentsInCollectionAsync<T>(string collectionName);
 
+    Task<List<T>> GetAllDocumentsInCollectionByFilterAsync<T>(string collectionName, FilterDefinition<T> filer);
+
     Task<T> GetFirstDocumentByIdAsync<T>(string collectionName, string id);
 
     Task<T> GetFirstDocumentByFilterAsync<T>(string collectionName, FilterDefinition<T> filter);

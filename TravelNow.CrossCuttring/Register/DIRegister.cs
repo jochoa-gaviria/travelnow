@@ -26,6 +26,7 @@ public static class DIResgister
         services.AddTransient<IHotelService, HotelService>();
         services.AddTransient<IRoomService, RoomService>();
         services.AddTransient<ITravelerService, TravelerService>();
+        services.AddTransient<IBookingService, BookingService>();
         return services;
     }
 
