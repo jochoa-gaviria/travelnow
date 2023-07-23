@@ -205,7 +205,7 @@ public class BookingService : IBookingService
         if (book != null && passenger != null)
         {
             string subject = $"Nueva reserva en TravelNow - {passenger.FullName}";
-            string body = $"Señor(a), {passenger.FullName}, le informamos de su reserva con id {book.Id} para {book.PeopleNumber} \n Reserva desde {book.StartDate} hasta {book.EndDate}";
+            string body = $"Señor(a), {passenger.FullName}, le informamos de su reserva con id {book.Id} para {book.PeopleNumber} personas \n Reserva desde {book.StartDate} hasta {book.EndDate}";
             await _emailSenderService.SendEmail(subject, body, passenger.Email);
         }
     }
