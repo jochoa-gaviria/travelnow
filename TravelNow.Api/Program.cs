@@ -1,4 +1,5 @@
 using TravelNow.CrossCuttring.Register;
+using TravelNow.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddRegistration(); //To Dependency Inyection
+builder.Services.AddModelState();
 
 var app = builder.Build();
 
