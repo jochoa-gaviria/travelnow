@@ -168,6 +168,41 @@ public class RoomService : IRoomService
         return serviceResponse;
     }
 
+
+    public async Task<ResponseDto<FindRoomResponseDto>> FindRoom(FindRoomRequestDto findRoomRequestDto)
+    {
+        ResponseDto<FindRoomResponseDto> serviceResponse = new();
+        try
+        {
+            var rooms = await _dataBaseContextRepository.GetAllDocumentsInCollectionAsync<Room>(_roomCollectionName);
+            if (rooms == null || !rooms.Any())
+            {
+                serviceResponse.SetProperties(HttpStatusCode.BadRequest, $"No hay habitaciones disponibles");
+                return serviceResponse;
+            }
+
+            var roomsByHotelId = rooms.Where(r => r.HotelId == new ObjectId(findRoomRequestDto.HotelId) && r.IsEnabled).ToList();
+            if (roomsByHotelId == null || !roomsByHotelId.Any())
+            {
+                serviceResponse.SetProperties(HttpStatusCode.BadRequest, $"No hay habitaciones disponibles en el hotel seleccionado");
+                return serviceResponse;
+            }
+
+            //TODO: Excluir de la lista de habitaciones aquella que ya tienen reserva en la fecha del Request
+            serviceResponse.Response = new FindRoomResponseDto
+            {
+                Rooms = roomsByHotelId.Select(r => r.TMapper<FindRoom>()).ToList()
+            };
+        }
+        catch (Exception)
+        {
+            serviceResponse.SetProperties(HttpStatusCode.InternalServerError, "Ocurrió un error inesperado. Intentelo nuevamente.");
+            return serviceResponse;
+        }
+
+        return serviceResponse;
+    }
+
     #endregion methods
 
 

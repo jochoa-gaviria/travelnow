@@ -5,7 +5,7 @@ namespace TravelNow.DataAccess.Contracts.Interfaces;
 
 public interface IDataBaseContextRepository
 {
-    IMongoCollection<T> GetCollection<T>(string collectionName);
+    Task<List<T>> GetAllDocumentsInCollectionAsync<T>(string collectionName);
 
     Task<T> GetFirstDocumentByIdAsync<T>(string collectionName, string id);
 

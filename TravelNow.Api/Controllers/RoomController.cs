@@ -61,5 +61,16 @@ public class RoomController : ControllerBase
         return Result.ExecuteResult(response);
     }
 
+
+    [HttpPost]
+    [ProducesResponseType(typeof(FindRoomResponseDto), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ErrorDto), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(ErrorDto), (int)HttpStatusCode.InternalServerError)]
+    public async Task<IActionResult> FindRoom([FromBody] FindRoomRequestDto findRoomRequestDto)
+    {
+        var response = await _roomService.FindRoom(findRoomRequestDto);
+        return Result.ExecuteResult(response);
+    }
+
     #endregion methods
 }

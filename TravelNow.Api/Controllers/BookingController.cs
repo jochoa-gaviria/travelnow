@@ -9,6 +9,7 @@ namespace TravelNow.Api.Controllers;
 [Produces("application/json")]
 public class BookingController : ControllerBase
 {
+
     [HttpGet]
     [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ErrorDto), (int)HttpStatusCode.BadRequest)]

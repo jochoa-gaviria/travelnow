@@ -27,4 +27,11 @@ public interface IRoomService
     /// <param name="disableRoomRequestDto"></param>
     /// <returns></returns>
     Task<ResponseDto<ResponseBaseDto>> DisableRoom(DisableRoomRequestDto disableRoomRequestDto);
+
+    /// <summary>
+    /// Permite buscar habitaciones disponibles
+    /// </summary>
+    /// <param name="findRoomRequestDto"></param>
+    /// <returns></returns>
+    Task<ResponseDto<FindRoomResponseDto>> FindRoom(FindRoomRequestDto findRoomRequestDto);
 }

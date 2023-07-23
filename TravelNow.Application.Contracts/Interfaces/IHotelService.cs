@@ -27,4 +27,11 @@ public interface IHotelService
     /// <param name="disableHotelRequestDto"></param>
     /// <returns></returns>
     Task<ResponseDto<ResponseBaseDto>> DisableHotel(DisableHotelRequestDto disableHotelRequestDto);
+
+    /// <summary>
+    /// Permite buscar hoteles disponibles
+    /// </summary>
+    /// <param name="findHotelRequestDto"></param>
+    /// <returns></returns>
+    Task<ResponseDto<FindHotelResponseDto>> FindHotel(FindHotelRequestDto findHotelRequestDto);
 }

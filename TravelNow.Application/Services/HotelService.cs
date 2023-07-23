@@ -152,6 +152,42 @@ namespace TravelNow.Application.Services
 
             return serviceResponse;
         }
+
+
+        public async Task<ResponseDto<FindHotelResponseDto>> FindHotel(FindHotelRequestDto findHotelRequestDto)
+        {
+            ResponseDto<FindHotelResponseDto> serviceResponse = new();
+            try
+            {
+                var hotels = await _dataBaseContextRepository.GetAllDocumentsInCollectionAsync<Hotel>(_collectionName);
+                if (hotels == null || !hotels.Any())
+                {
+                    serviceResponse.SetProperties(HttpStatusCode.BadRequest, $"No hay hoteles disponibles");
+                    return serviceResponse;
+                }
+
+                var hotelsByCity = hotels.Where(h => h.IsEnabled && h.City == findHotelRequestDto.City).ToList();
+                if (hotelsByCity == null || !hotelsByCity.Any())
+                {
+                    serviceResponse.SetProperties(HttpStatusCode.BadRequest, $"No hay hoteles disponibles en la ciudad {findHotelRequestDto.City}");
+                    return serviceResponse;
+                }
+
+
+                serviceResponse.Response = new FindHotelResponseDto()
+                {
+                    Hotels = hotelsByCity.Select(h => h.TMapper<FindHotel>()).ToList()
+                };
+
+            }
+            catch (Exception)
+            {
+                serviceResponse.SetProperties(HttpStatusCode.InternalServerError, "Ocurrió un error inesperado. Intentelo nuevamente.");
+                return serviceResponse;
+            }
+
+            return serviceResponse;
+        }
         #endregion public methods
 
 

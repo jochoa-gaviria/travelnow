@@ -37,8 +37,10 @@ public class DataBaseContextRepository : IDataBaseContextRepository
 
     #region methods
 
-    public IMongoCollection<T>? GetCollection<T>(string collectionName) => 
-        _database?.GetCollection<T>(collectionName);
+    public async Task<List<T>> GetAllDocumentsInCollectionAsync<T>(string collectionName) 
+    {
+        return await _database.GetCollection<T>(collectionName).Find(_ => true).ToListAsync();
+    }
 
     public async Task<T> InsertDocumentAsync<T>(string collectionName, T document)
     {

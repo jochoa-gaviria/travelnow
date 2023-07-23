@@ -59,5 +59,15 @@ public class HotelController : ControllerBase
         return Result.ExecuteResult(response);
     }
 
+    [HttpPost]
+    [ProducesResponseType(typeof(FindHotelResponseDto), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ErrorDto), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(ErrorDto), (int)HttpStatusCode.InternalServerError)]
+    public async Task<IActionResult> FindHotel([FromBody] FindHotelRequestDto findHotelRequestDto)
+    {
+        var response = await _hotelService.FindHotel(findHotelRequestDto);
+        return Result.ExecuteResult(response);
+    }
+
     #endregion API's
 }
