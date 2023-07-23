@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using TravelNow.Common.Enums;
+using TravelNow.Common.Interfaces;
 using TravelNow.DataAccess.Contracts.Interfaces;
 
 namespace TravelNow.DataAccess.Context;
@@ -10,8 +12,7 @@ public class DataBaseContextRepository : IDataBaseContextRepository
 {
     #region internals
     IMongoClient? _client;
-    private readonly IConfiguration _configuration;
-    private readonly IConfigurationSection _connectionStringsSection;
+    private readonly IAppConfigHelper _appConfig;
     public readonly IMongoDatabase? _database = null;
 
     #endregion internals
@@ -21,12 +22,11 @@ public class DataBaseContextRepository : IDataBaseContextRepository
     /// Constructor
     /// </summary>
     /// <param name="configuration"></param>
-    public DataBaseContextRepository(IConfiguration configuration)
+    public DataBaseContextRepository(IAppConfigHelper appConfig)
     {
-        _configuration = configuration;
-        _connectionStringsSection = _configuration.GetSection("ConnectionStrings");
-        string connectionString = _connectionStringsSection.GetSection("ConnectionString").Value;
-        string databaseName = _connectionStringsSection.GetSection("Database").Value;
+        _appConfig = appConfig;
+        string connectionString = _appConfig.DatabaseSettings[EDatabaseSettings.ConnectionString];
+        string databaseName = _appConfig.DatabaseSettings[EDatabaseSettings.Database];
 
         _client = new MongoClient(connectionString);
         if (_client != null)

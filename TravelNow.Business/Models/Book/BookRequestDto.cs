@@ -5,12 +5,6 @@ namespace TravelNow.Business.Models.Book;
 
 public class BookRequestDto
 {
-
-    /// <summary>
-    /// Id de reserva
-    /// </summary>
-    public string? BookId { get; set; }
-
     /// <summary>
     /// Id de hotel
     /// </summary>

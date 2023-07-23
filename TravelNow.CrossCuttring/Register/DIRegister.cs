@@ -27,6 +27,7 @@ public static class DIResgister
         services.AddTransient<IRoomService, RoomService>();
         services.AddTransient<ITravelerService, TravelerService>();
         services.AddTransient<IBookingService, BookingService>();
+        services.AddSingleton<IEmailSenderService, EmailSenderService>();
         return services;
     }
 
@@ -34,6 +35,7 @@ public static class DIResgister
     {
         services.AddTransient<IDataBaseContextRepository, DataBaseContextRepository>();
         services.AddTransient<ICollectionNameHelper, CollectionNameHelper>();
+        services.AddTransient<IAppConfigHelper, AppConfigHelper>();
         return services;
     }
 

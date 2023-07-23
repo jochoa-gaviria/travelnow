@@ -20,6 +20,7 @@ public class BookingService : IBookingService
 {
 
     #region internals
+    private readonly IEmailSenderService _emailSenderService;
     private readonly IDataBaseContextRepository _dataBaseContextRepository;
     private readonly ICollectionNameHelper _collectionNameHelper;
     private readonly string _hotelCollectionName;
@@ -30,7 +31,7 @@ public class BookingService : IBookingService
     #endregion internals
 
     #region constructor
-    public BookingService(IDataBaseContextRepository dataBaseContextRepository, ICollectionNameHelper collectionNameHelper)
+    public BookingService(IDataBaseContextRepository dataBaseContextRepository, ICollectionNameHelper collectionNameHelper, IEmailSenderService emailSenderService)
     {
         _dataBaseContextRepository = dataBaseContextRepository;
         _collectionNameHelper = collectionNameHelper;
@@ -38,6 +39,7 @@ public class BookingService : IBookingService
         _passengerCollectionName = _collectionNameHelper.CollectionNames[ECollectionName.passerger];
         _roomCollectionName = _collectionNameHelper.CollectionNames[ECollectionName.room];
         _hotelCollectionName = _collectionNameHelper.CollectionNames[ECollectionName.hotel];
+        _emailSenderService = emailSenderService;
     }
     #endregion contructor
 
@@ -176,7 +178,7 @@ public class BookingService : IBookingService
             {
                 Books = books.Select(b => 
                 {
-                    var book = b.TMapper<BookRequestDto>();
+                    var book = b.TMapper<BookResponse>();
                     book.BookId = b.Id.ToString();
                     book.HotelId = b.HotelId.ToString();
                     book.RoomId = b.RoomId.ToString();
@@ -200,8 +202,12 @@ public class BookingService : IBookingService
     #region private methods
     private async Task SendEmailNotification(Book book, Passenger passenger)
     {
-        //TODO complete send email
-        Console.WriteLine("Send email..."); 
+        if (book != null && passenger != null)
+        {
+            string subject = $"Nueva reserva en TravelNow - {passenger.FullName}";
+            string body = $"Señor(a), {passenger.FullName}, le informamos de su reserva con id {book.Id} para {book.PeopleNumber} \n Reserva desde {book.StartDate} hasta {book.EndDate}";
+            await _emailSenderService.SendEmail(subject, body, passenger.Email);
+        }
     }
 
     #endregion private methods
