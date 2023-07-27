@@ -8,6 +8,7 @@ public class FindRoomResponseDto
 
 public class FindRoom
 {
+    public string? Id { get; set; }
     public string? RoomNumber { get; set; }
     public float BaseCost { get; set; }
     public float Tax { get; set; }

@@ -215,7 +215,13 @@ public class RoomService : IRoomService
 
             serviceResponse.Response = new FindRoomResponseDto
             {
-                Rooms = roomsByHotelId.Select(r => r.TMapper<FindRoom>()).ToList()
+                Rooms = roomsByHotelId.Select(r =>
+                {
+                    var room = r.TMapper<FindRoom>();
+                    room.Id = r.Id.ToString();
+                    return room;
+                }).ToList()
+
             };
         }
         catch (Exception)
